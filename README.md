@@ -1,6 +1,6 @@
 # NSI
 
-Mes sources et projet concernant la spécialité NSI de première du lycée général
+Mes sources et projet concernant la spécialité NSI au lycée
 
 ## (pour le cours) Visualisation du complément à 2
 
