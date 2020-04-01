@@ -2,7 +2,7 @@
 
 Mes sources et projet concernant la spécialité NSI au lycée
 
-## (pour le cours) Visualisation du complément à 2
+## Visualisation du complément à 2
 
 Python3 avec le module tkinter doivent être installés
 On peut alors utiliser la ligne de commande : 
