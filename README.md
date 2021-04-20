@@ -20,6 +20,12 @@ HTML/CSS/JavaScript/CSV
 
 Utilisation visuelle et interactive de l'algorithme
 
+## Tri
+
+HTML/CSS/JavaScript
+
+Tri de cartes à jouer, à la main, par insertion ou par sélection
+
 ## Recherche textuelle
 
 HTML/CSS/JavaScript
