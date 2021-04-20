@@ -20,4 +20,8 @@ HTML/CSS/JavaScript/CSV
 
 Utilisation visuelle et interactive de l'algorithme
 
+## Recherche textuelle
 
+HTML/CSS/JavaScript
+
+Recherche naïve et implémentation par étape de Boyer-Moore
