@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Cartes</title>
+        <link rel="stylesheet" type="text/css" href="tri-style.css"/>
+    </head>
+    <body>
+    <div id="plateau">
+        <div class="slot" id="t0"></div>
+        <div class="slot" id="s0"></div>
+        <div class="slot" id="s1"></div>
+        <div class="slot" id="s2"></div>
+        <div class="slot" id="s3"></div>
+        <div class="slot" id="s4"></div>
+        <div class="slot" id="s5"></div>
+        <div class="slot" id="s6"></div>
+        <div class="slot" id="s7"></div>
+        <div class="slot" id="s8"></div>
+        <div class="slot" id="s9"></div>
+        <div class="pointe" id="t1"><div class="jeton indicei"><div>i</div></div><div class="jeton indicej"><div>j</div></div><div class="jeton indicek"><div>k</div></div></div>
+        <div class="pointe" id="p0"></div>
+        <div class="pointe" id="p1"></div>
+        <div class="pointe" id="p2"></div>
+        <div class="pointe" id="p3"></div>
+        <div class="pointe" id="p4"></div>
+        <div class="pointe" id="p5"></div>
+        <div class="pointe" id="p6"></div>
+        <div class="pointe" id="p7"></div>
+        <div class="pointe" id="p8"></div>
+        <div class="pointe" id="p9"></div>
+        
+    </div><div id="options">
+        <form id="mode"> Mode : 
+            <input type="radio" id="switch" name ="mode" value="switch" checked><label for="switch">Échange</label>
+            <input type="radio" id="copy" name ="mode" value="copy"><label for="copy">Copie</label>
+        </form>
+    <form id="actions">
+    <input type="button" value="Cache tout" onclick="cacheTout()">
+    <input type="button" value="Montre tout" onclick="montreTout()">
+    <input type="button" value="Nouveau tirage" onclick="nouveau();montreTout()">
+    <input type="button" value="Nouveau tirage caché" onclick="nouveau();cacheTout()">
+    </form><form id="tris">
+    <input type="button" value="Tri par sélection" onclick="visible=true;triParSelection()">
+    <input type="button" value="Tri par sélection (caché)" onclick="visible=false;triParSelection()">
+    <input type="button" value="Tri par insertion" onclick="visible=true;triParInsertion()">
+    <input type="button" value="Tri par insertion (caché)" onclick="visible=false;triParInsertion()">
+    <div class="slidecontainer"><input type="range" min="50" max="1000" value="300" class="slider" id="tempo"></div>
+    </form></div>
+    </div>
+    </body>
+    <script src="tri-script.js"></script>
+</html>

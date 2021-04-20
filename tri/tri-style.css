@@ -1,0 +1,191 @@
+body {
+  padding : 0px;
+  margin : 0px;
+  background-color : rgb(0,50,0);
+}
+
+#plateau{
+  padding : 0px;
+  margin : 0px;
+  height : 38vw;
+}
+
+.slot {
+    position : absolute;
+    top : 2vw;
+    left : 46vw;
+    height : 13vw;
+    width : 8vw;
+    border : dashed 3px white;
+    border-radius: 10%;
+}
+
+.carte {
+    position : relative;
+    top : 0px;
+    left : 0px;
+    height : 13vw;
+    width : 8vw;
+    transform-style : preserve-3d;
+    transition : all 0.5s ease;
+}
+
+.tourne {
+    transform : rotateY(180deg);    
+}
+
+.face {
+    position : relative;
+    top : -5px;
+    left : -5px;
+    height : 13vw;
+    width : 8vw;
+    border : double 5px black;
+    border-radius: 10%;
+    background:linear-gradient(to bottom,#fff,#ddd); 
+    display:grid;
+    grid-template-columns: auto;
+    grid-template-rows: 13% 13% 24% 24% 13% 13%;
+    font-size:2vw;
+    backface-visibility : hidden;
+}
+
+.face span:nth-of-type(5), .face span:nth-of-type(6){
+    transform:rotate(180deg);
+    margin-inline:.25vw;
+}
+
+.face span:nth-of-type(1), .face span:nth-of-type(2){
+    margin-inline:.25vw;
+}
+
+.face span:nth-of-type(3), .face span:nth-of-type(4){
+    font-size:4.5vw;
+    place-self:center;
+}
+
+.rouge{color:red;}
+.noire{color:black;}
+
+.dos {
+    position : absolute;
+    top : -5px;
+    left : -5px;
+    height : 13vw;
+    width : 8vw;
+    border : double 5px black;
+    border-radius: 10%;
+    background:background:linear-gradient(to bottom,#fff,#ddd); 
+    backface-visibility : hidden;
+    transform : rotateY(180deg);
+    background-color:white;
+}
+
+.dos::after {
+    content: "";
+    position : absolute;
+    height : 13vw;
+    width : 8vw;
+    border-radius: 10%;
+    background:repeating-linear-gradient(45deg, #a4a5e6, #a4a5e6 1vw, #9198e5 1vw, #9198e5 2vw);
+}
+
+#options {
+    text-align : center;
+    color : rgb(255,255,255);
+}
+
+#option button {
+    color : rgb(0,0,0);
+}
+
+.pointe {
+    position : absolute;
+    top : 9vw;
+    left : 5vw;
+    height : 2.5vw;
+    width : 8vw;
+    border : solid 3px transparent;
+    border-radius: 10%;
+    text-align : center;
+}
+
+.jeton{
+    display : inline-block;
+    width : 1.9vw;
+    border-radius: 50%;
+    border : dashed 0.3vw;
+    background-color : white;
+}
+
+.jeton div{
+    position : relative;
+    color : black;
+    height : 1.5vw;
+    width : 1.5vw;
+    border-radius: 50%;
+    border : solid 0.2vw;
+    border-color : inherit;
+    background-color : inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size : 1.4vw;
+    font-weight : bold;
+}
+
+.indicei { 
+    border-color : gold;
+}
+
+.indicej { 
+    border-color : red;
+}
+
+.indicek {
+    border-color : blue;
+}
+
+.slidecontainer {
+  width: 50%; /* Width of the outside container */
+  margin : auto;
+}
+
+/* The slider itself */
+.slider {
+  -webkit-appearance: none;  /* Override default CSS styles */
+  appearance: none;
+  width: 100%; /* Full-width */
+  height: 5px; /* Specified height */
+  background: #d3d3d3; /* Grey background */
+  outline: none; /* Remove outline */
+  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
+  margin-top : 15px;
+  margin-bottom : 15px;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+  opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  border-radius: 50%;
+  background: #0098f8; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+  width: 15px; /* Set a specific slider handle width */
+  height: 15px; /* Slider handle height */
+  border-radius: 50%;
+  background: #0098f8; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}
