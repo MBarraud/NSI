@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Recherche</title>
+        <link rel="stylesheet" type="text/css" href="Boyer-Moore-style.css"/>
+    </head>
+    <body><form id="menu">
+    <div>Choix des éléments de la recherche</div>
+    <div><label for="texteval">Texte :</label>
+         <input type="text" id="texteval" name="texte_valeur">
+    </div><div><label for="motifval">Motif :</label>
+        <input type="text" id="motifval" name="motif_valeur">
+    </div><div><label for="alphabet">Alphabet :</label>
+         <input type="text" id="alphabet" name="alphabet">
+    </div><div><input type="button" id="changeelements" value="Valider" class="bouton" onclick="valide()">
+               <input type="button" id="changeelements" value="Annuler" class="bouton" onclick="annule()">
+    </div></form>
+    <div id="appli">
+    <div id="outils">⚙</div>
+    <h1><span>Fenêtre glissante<span></h1>    
+    <div id="plateau">
+        <div id="zonei"><div class="jeton indicei invisible"><div>i</div></div></div>
+        <div id="cherche">
+            <div id="texte"></div>
+            <div id="cache"><div id="fenetre"></div><div id="motif"></div></div>
+        </div>
+        <div id="zonej"><div class="jeton indicej invisible"><div>j</div></div></div>
+    </div>
+    <div id="choix"><span id="indice" class="invisible">Indice OFF</span><span id="reverse" class="invisible">&rarr;</span></div>
+    <nav><div id="m1">-1</div><div id="init">&#8617;</div><div id="p1">+1</div></nav>
+    <div class="centre"><div id="auto">Tests manuels</div>
+    <input type="checkbox" value="None" id="checkmc" name="mc" class="invisible"/>
+    <input type="checkbox" value="None" id="checkbs" name="bs" class="invisible"/>
+    </div>
+    <div class="split2 invisible" id="mc"></div><div class="split2 invisible" id="bs"></div>
+    </div>
+    </body>
+    <script src="Boyer-Moore-script.js"></script>
+</html>
