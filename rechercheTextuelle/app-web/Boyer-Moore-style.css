@@ -1,3 +1,10 @@
+/* Mickaël BARRAUD 
+mickael.barraud@ac-nantes.fr
+CC BY-NC-SA 4.0 https://creativecommons.org/licenses/by-nc-sa/4.0/
+Écrit dans l'optique d'enseigner la recherche textuelle en TNSI
+Mise à jour de Juillet 2021
+https://github.com/MBarraud/NSI/tree/master/rechercheTextuelle
+*/
 :root {
     --nbCarte : 25;
     --largeurCarte : calc(calc(calc(95vw - 2px) / var(--nbCarte)) - 12px);
@@ -92,7 +99,7 @@ h1 > span {
     text-align:center;
     color:blue;
     background:linear-gradient(to bottom,#fff,#ddd);
-	text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
+    text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
     border : 5px double black;
     border-radius: 10px;
 }

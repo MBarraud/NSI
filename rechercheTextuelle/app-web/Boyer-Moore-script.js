@@ -1,26 +1,37 @@
+// 
+// Mickaël BARRAUD 
+// mickael.barraud@ac-nantes.fr
+// CC BY-NC-SA 4.0 https://creativecommons.org/licenses/by-nc-sa/4.0/
+// Écrit dans l'optique d'enseigner la recherche textuelle en TNSI
+// Mise à jour de Juillet 2021
+// https://github.com/MBarraud/NSI/tree/master/rechercheTextuelle
+// 
 var alphabet = "ACGT";
 var T = "CATCTGCGAAGGCAGGAGCATGACC";
 var M = "CAGGAG";
 
-var carteT = [];
-var carteM = [];
-var positionM = 0;
-var reverse = false;
-var autotest = false;
-var indice = false;
-var testencours = null;
-var mauvaisCaractere = {};
-var bonSuffixe = [];
+var carteT = [];           // Liste des lettres du texte
+var carteM = [];           // Liste des lettres du motif
+var positionM = 0;         // Position (indice i) du motif
+var reverse = false;       // La recherche se fait-elle vesr la gauche ?
+var autotest = false;      // Le test est-t-il automatique ?
+var indice = false;        // Les jetons sont-ils visibles ?
+var testencours = null;    // Identifiant de l'annimation en cours
+var mauvaisCaractere = {}; // Dictoinnaires des mauvais caractères
+var bonSuffixe = [];       // Tableau des bon suffixes
+
 init(T,M);
+
+////////////////////////////////////////////////////////////////
+// Mise en place des gestionnaires d'événement.
+////////////////////////////////////////////////////////////////
+// Clique sur la flèche +1
 document.querySelector('#p1').addEventListener('click',evt => {avance(1)});
+// Clique sur la flèche -1
 document.querySelector('#m1').addEventListener('click',evt => {avance(-1)});
-document.querySelector('#init').addEventListener('click',evt => {
-    positionne(0);
-    if (autotest) {
-        if (reverse) testencours = setTimeout(lambda => {testereverse(M.length-1)}, 250);
-        else testencours = setTimeout(lambda => {teste(0)}, 250);
-    }
-});
+// Clique sur le rond centrale de retour
+document.querySelector('#init').addEventListener('click',evt => {avance(-positionM)});
+// Clique sur le switch auto/manuel
 document.querySelector('#auto').addEventListener('click',evt => {
     autotest=!autotest;
     if (autotest) {
@@ -48,6 +59,7 @@ document.querySelector('#auto').addEventListener('click',evt => {
         document.querySelector('#checkbs').classList.add("invisible");
     }
     avance(0);});
+// Clique sur le switch indice ON/OFF
 document.querySelector('#indice').addEventListener('click',evt => {
     indice=!indice;
     if (indice) {
@@ -61,14 +73,14 @@ document.querySelector('#indice').addEventListener('click',evt => {
         document.querySelector('.indicej').classList.add("invisible");
     }
     });
+// Clique sur le switch de recherche gauche/droite
 document.querySelector('#reverse').addEventListener('click',evt => {
     reverse=!reverse;
     avance(0);
-    if (reverse) {
-        evt.target.innerHTML="&larr;";
-        setTimeout(lambda => {testereverse(M.length-1)}, 250);
-    }
+    if (reverse) evt.target.innerHTML="&larr;";
     else {
+        evt.target.innerHTML="&rarr;";
+        // Décoche les check bs et mc et leur envois l'event de changement
         if (document.querySelector('#checkmc').checked) {
             document.querySelector('#checkmc').checked = false;
             document.querySelector('#checkmc').dispatchEvent(new Event('change'));
@@ -76,24 +88,56 @@ document.querySelector('#reverse').addEventListener('click',evt => {
             document.querySelector('#checkbs').checked = false;
             document.querySelector('#checkbs').dispatchEvent(new Event('change'));
         }
-        evt.target.innerHTML="&rarr;";
-        setTimeout(lambda => {teste(0)}, 250);
     }
     });
+// Gestionnaire lié au changement coché/décoché des chek bs et mc
 function clickCheck(evt) {
     if (evt.target.checked) {
         document.querySelector('#'+evt.target.name).classList.remove("invisible");
         reverse = true;
-        avance(0);
         document.querySelector('#reverse').innerHTML="&larr;";
-        setTimeout(lambda => {testereverse(M.length-1)}, 250);
+        avance(0);
     }
     else document.querySelector('#'+evt.target.name).classList.add("invisible");
 }
+// Changement de coché/décoché des chek bs et mc
 document.querySelector('#checkmc').addEventListener('change',clickCheck, false);
 document.querySelector('#checkbs').addEventListener('change',clickCheck, false);
-    
+// Ouverture du menu par la touche Échap
+document.onkeydown = evt => {if (evt.keyCode==27) menu()};
+// Ouverture du menu par le click sur la roue
+document.querySelector('#outils').addEventListener('click',menu,false);
+
+////////////////////////////////////////////////////////////////
+// Menu
+////////////////////////////////////////////////////////////////
+function menu(){
+	document.querySelector("main").style.filter="blur(5px)";
+    document.querySelector("#menu").style.display="inline-block";
+    document.querySelector("#texteval").value=T;
+    document.querySelector("#motifval").value=M;
+    document.querySelector("#alphabet").value=alphabet;
+}
+function annule() {
+    document.querySelector("main").style.filter="";
+    document.querySelector("#menu").style.display="none";
+}
+function valide() {
+    document.querySelector("main").style.filter="";
+    document.querySelector("#menu").style.display="none";
+    T = document.querySelector("#texteval").value;
+    M = document.querySelector("#motifval").value;
+    alphabet = document.querySelector("#alphabet").value;
+    init(T,M);
+}
+
+////////////////////////////////////////////////////////////////
+// Fonctions
+////////////////////////////////////////////////////////////////
+
 function initBS(m) {
+    // Calcul du tableau des bons suffixes du motif m
+    ////////////////////////////////////////////////////////////
     var bs = [];
     for (var j=0;j<m.length;j++){
         bs.push(m.length);
@@ -107,29 +151,11 @@ function initBS(m) {
     }
     return bs;
 }
-document.onkeydown = evt => {if (evt.keyCode==27) menu()};
-document.querySelector('#outils').addEventListener('click',menu,false);
-function menu(){
-	document.querySelector("#appli").style.filter="blur(5px)";
-    document.querySelector("#menu").style.display="inline-block";
-    document.querySelector("#texteval").value=T;
-    document.querySelector("#motifval").value=M;
-    document.querySelector("#alphabet").value=alphabet;
-}
-function annule() {
-    document.querySelector("#appli").style.filter="";
-    document.querySelector("#menu").style.display="none";
-}
-function valide() {
-    document.querySelector("#appli").style.filter="";
-    document.querySelector("#menu").style.display="none";
-    T = document.querySelector("#texteval").value;
-    M = document.querySelector("#motifval").value;
-    alphabet = document.querySelector("#alphabet").value;
-    init(T,M);
-}
 
 function init(t,m) {
+    // Initialisation à partir du texte t et du motif m
+    ////////////////////////////////////////////////////////////
+    // Fabrication des cartes du texte 
     carteT = [];
     var texte = document.querySelector('#texte');
     texte.textContent="";
@@ -160,6 +186,8 @@ function init(t,m) {
         motif.appendChild(carte);
     }
     //Mauvais caractères
+    document.querySelector('#checkmc').checked = false;
+    document.querySelector('#checkmc').dispatchEvent(new Event('change'));
     var splitmc = document.querySelector("#mc");
     splitmc.innerHTML = "<h1><span>Mauvais caractère<span></h1>";
     for (k=0;k<alphabet.length;k++) {
@@ -189,6 +217,8 @@ function init(t,m) {
     for (k=0;k<alphabet.length;k++) document.querySelector("#mc"+alphabet[k]).firstChild.innerHTML=mc[alphabet[k]];
     mauvaisCaractere = mc;
     //Bon suffixe
+    document.querySelector('#checkbs').checked = false;
+    document.querySelector('#checkbs').dispatchEvent(new Event('change'));
     var splitbs = document.querySelector("#bs");
     splitbs.innerHTML = "<h1><span>Bon suffixe<span></h1>";
     var choixbs=document.createElement("div");
@@ -223,27 +253,37 @@ function init(t,m) {
     var bs = initBS(m);
     for (k=0;k<m.length;k++) document.querySelector("#bs"+k).firstChild.innerHTML=bs[k];
     bonSuffixe = bs;
-    document.querySelector('#checkmc').checked = false;
-    document.querySelector('#checkbs').checked = false;
+    avance(0);
 }
 
 function positionne(pos) {
+    // Positionne la fenêtre de recherche à la position pos
+    ////////////////////////////////////////////////////////////
+    // Supprime la couleur de fond des cartes du motif
     for (j=0;j<M.length;j++) {
         carteM[j].classList.remove("fondNO");
         carteM[j].classList.remove("fondOK");
     }
+    // Supprime la couleur de fond des cartes du texte visibles
     for (i=0;i<T.length;i++) {
         carteT[i].classList.remove("fondNO");
         carteT[i].classList.remove("fondOK");
     }
+    // Positionne la fenêtre
     document.querySelector('#cache').style.left="calc(calc(calc(var(--largeurCarte) + 12px) * "+pos+") - var(--largeurTexte))";
+    // Positionne le jeton i
     document.querySelector('.indicei').style.left="calc(calc(var(--largeurCarte) + 12px) * "+pos+".25)"; 
+    // Positionne le jeton j
     if (reverse) document.querySelector('.indicej').style.left="calc(calc(var(--largeurCarte) + 12px) * "+(M.length-1+pos)+".25)"; 
-    else document.querySelector('.indicej').style.left="calc(calc(var(--largeurCarte) + 12px) * "+pos+".25)"; 
+    else document.querySelector('.indicej').style.left="calc(calc(var(--largeurCarte) + 12px) * "+pos+".25)";
+    // Met à jour l'enregistrement de la position du motif
     positionM = pos;
 }
 
 function avance(k) {
+    // Annime l'avancé de la fenêtre de k lettres 
+    // et les comparaisons si elles sont automatiques
+    ////////////////////////////////////////////////////////////
     if (testencours != null) clearTimeout(testencours);
     positionne(positionM+k);
     if (positionM>=T.length-M.length) setTimeout(lambda => {positionne(T.length-M.length);}, 250);
@@ -255,6 +295,9 @@ function avance(k) {
 }
   
 function compare(j) {
+    // Compare la lettre d'indice j du motif avec le texte
+    // (Change le visuel du fond des cartes)
+    ////////////////////////////////////////////////////////////
     if (M[j]==T[positionM+j]) {
         carteM[j].classList.add("fondOK");
         carteT[positionM+j].classList.add("fondOK");
@@ -268,6 +311,9 @@ function compare(j) {
 }
 
 function testereverse(k) {
+    // Anime le test du matif de droite à gauche
+    ////////////////////////////////////////////////////////////
+    // Supprime les indications de mc et bs
     if (k==M.length-1) {
         for (j=0;j<alphabet.length;j++) document.querySelector("#mc"+alphabet[j]).lastChild.lastChild.classList.remove("fondNO");
         for (j=0;j<M.length;j++) {
@@ -275,6 +321,7 @@ function testereverse(k) {
             document.querySelector("#bs"+j).querySelector(".carte").classList.remove("fondNO");
         }
     }
+    // Anime le test
     document.querySelector('.indicej').style.left="calc(calc(var(--largeurCarte) + 12px) * "+(positionM+k)+".25)";
     if (compare(k)) {
         document.querySelector('.indicej').style.left="calc(calc(var(--largeurCarte) + 12px) * "+(positionM+k-1)+".25)";
@@ -296,7 +343,10 @@ function testereverse(k) {
     }
     
 }
+
 function teste(k) {
+    // Anime le test du motif de gauche à droite
+    ////////////////////////////////////////////////////////////
     document.querySelector('.indicej').style.left="calc(calc(var(--largeurCarte) + 12px) * "+(positionM+k)+".25)";
     if (compare(k)) {
         document.querySelector('.indicej').style.left="calc(calc(var(--largeurCarte) + 12px) * "+(positionM+k+1)+".25)"; 
